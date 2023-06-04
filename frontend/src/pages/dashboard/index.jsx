@@ -7,6 +7,7 @@ import NoWallet from "../../components/dashboard/NoWallet"
 import PerformAudit from "../../components/dashboard/PerformAudit"
 import useGetContracts from "../../hooks/useGetContractsOfWalletAddress"
 import useWindowSize from "../../hooks/useWindowSize"
+import AuditorForm from "../../components/dashboard/AuditorForm"
 import {
   getAuditsOfContract,
   getBackendSignature,
@@ -19,17 +20,23 @@ import { getTurtleTokenContract } from "../../utils/contracts"
 import MintSuccess from "../../components/dashboard/MintSuccess"
 
 const PageState = {
+  initialForm: "initialForm",
   performAudit: "performAudit",
   mintNft: "mintNft",
   mintSuccess: "mintSuccess",
 }
 
 export default function Dashboard() {
-  const [pageState, setPageState] = useState(PageState.performAudit)
+  const [pageState, setPageState] = useState(PageState.initialForm)
 
   const { width, height } = useWindowSize()
   const { address } = useAccount()
   const { data: signer } = useSigner()
+
+  const handleFormSubmit = (values) => {
+    // Handle form submission here, then change page state
+    setPageState(PageState.performAudit);
+  }
 
   const [selectedContract, setSelectedContract] = useState({
     address: "",
@@ -211,6 +218,10 @@ export default function Dashboard() {
     }
 
     switch (pageState) {
+      case PageState.initialForm:
+        content = <AuditorForm onSubmit={handleFormSubmit} />;
+        break
+
       case PageState.performAudit:
         content = (
           <PerformAudit

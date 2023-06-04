@@ -4,12 +4,14 @@ import soonami from '../../assets/soonami.svg';
 import XyChart from './XyChart';
 import  PieChart  from './PieChart';
 import { ConnectButton } from "@rainbow-me/rainbowkit"
+import AuditorForm from './AuditorForm';
 
 import './Cookie3.css';
 
 function Cookie3() {
   return (
     <div className="cookie3">
+      <AuditorForm />
       <div className="section3">
       <div className="">
         <h1></h1>
